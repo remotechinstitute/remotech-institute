@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemoTech Institute Porjects</title>
+    <link rel="shortcut icon" href="favicon_io/favicon-32x32.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="remotech.ico" type="image/x-icon">
+</head>
+
+<style>
+    .project {
+        font-size: 16px;
+        font-weight: 600;
+        opacity: 0.7;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .project:hover {
+        opacity: 1;
+        /* font-size: 16px; */
+    }
+</style>
+
+<body>
+    <div class="container pt-5">
+        <h1>Projects</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Project</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let projects = [];
+
+        async function fetchLocalJson() {
+            try {
+                const response = await fetch('data.json'); // Replace 'data.json' with the actual path to your JSON file.
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching JSON:', error);
+            }
+        }
+
+        // Call the async function and handle the returned data
+        fetchLocalJson()
+            .then(data => {
+                if (data) {
+                    console.log('Fetched JSON data:', data);
+                    // You can process the JSON data here.
+                    projects = data.projects;
+                    createTable()
+                } else {
+                    console.log('No data fetched.');
+                }
+            });
+
+        function createTable() {
+            let str = ''
+            projects.forEach((item, index) => {
+                str += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><a href="${item.url}" class="project" target="_blank">${item.name}</a></td>
+                    </tr>
+                `
+            })
+            document.getElementById('tbody').innerHTML = str;
+        }
+    </script>
+</body>
+
+</html>
