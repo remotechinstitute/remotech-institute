@@ -29,6 +29,19 @@
         opacity: 1;
         /* font-size: 16px; */
     }
+
+    .repo-url {
+        padding: 0.25em 0.5em;
+        text-align: end;
+    }
+
+    .repo-url-cell {
+        text-align: end;
+    }
+
+    .repo-url img{
+        width: 22px;
+    }
 </style>
 
 <body>
@@ -39,6 +52,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Project</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody id="tbody">
@@ -48,6 +62,8 @@
 
     <script>
         let projects = [];
+        const repoUrl = 'https://remotechinstitute.github.io/';
+        const liveUrl = 'https://github.com/remotechinstitute/'
 
         async function fetchLocalJson() {
             try {
@@ -68,7 +84,6 @@
         fetchLocalJson()
             .then(data => {
                 if (data) {
-                    console.log('Fetched JSON data:', data);
                     // You can process the JSON data here.
                     projects = data.projects;
                     createTable()
@@ -83,11 +98,17 @@
                 str += `
                 <tr>
                     <td>${index + 1}</td>
-                    <td><a href="${item.url}" class="project" target="_blank">${item.name}</a></td>
-                    </tr>
+                    <td><a href="${liveUrl + item.url}" class="project" target="_blank">${item.name}</a></td>
+                    <td class="repo-url-cell"><button class="btn btn-primary repo-url" onclick="goToCode('${item.url}')"><img src="assets/images/code.png"/></button></td>
+                </tr>
                 `
             })
             document.getElementById('tbody').innerHTML = str;
+        }
+
+        function goToCode(url) {
+            const path = repoUrl + url
+            window.open(path, '_blank');
         }
     </script>
 </body>
