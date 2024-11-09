@@ -31,6 +31,14 @@
         {
             "name": "Recipe Page Project",
             "url": "recipe-page_frontend-mentor/"
+        },
+        {
+            "name": "Single Price Component",
+            "url": "single-price-grid-component_frontend-mentor/"
+        },
+        {
+            "name": "Profile Card Component",
+            "url": "profile-card-component_frontend-mentor"
         }
     ]
 }
